@@ -3,17 +3,17 @@ use cc_core::{JobNumber, JobURL};
 fn main() {
     let results = std::env::args()
         .skip(1)
-        .map(|input| input.trim().parse::<JobNumber>())
-        .map(|input| input.map(|num| JobURL::from(num)))
-        .map(|input| input.map(|url| open::that(url.as_str()).map(|_| url)));
+        .map(|args| args.trim().parse::<JobNumber>())
+        .map(|num| num.map(|num| JobURL::from(num)))
+        .map(|url| url.map(|url| open::that(url.as_str()).map(|_| url)));
 
     for result in results {
         match result {
-            Ok(ok) => match ok {
-                Ok(ok) => println!("Opened: {}", ok),
-                Err(err) => eprintln!("Error: {}", err),
+            Ok(parsed) => match parsed {
+                Ok(opened) => println!("Opened: {}", opened),
+                Err(opened_err) => eprintln!("Error: {}", opened_err),
             },
-            Err(err) => eprintln!("Error: {}", err),
+            Err(parsed_err) => eprintln!("Error: {}", parsed_err),
         }
     }
 }

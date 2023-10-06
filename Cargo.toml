@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 cc-core = { git = "https://github.com/computingfun-org/cc-core.git" }
 open = "^5"
+cli-clipboard = "^0"
